@@ -12,10 +12,10 @@
         <div class="collapse navbar-collapse" id="navmenu">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a href="#instructors" class="nav-link active">Dashboard</a>
+                    <a href="{{ route('admin.dashboard') }}" class="nav-link active">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a href="#learn" class="nav-link">Job Posted</a>
+                    <a href="{{ route('admin.show') }}" class="nav-link">Job Posted</a>
                 </li>
                 <li class="nav-item">
                     <a href="#questions" class="nav-link">Applicants</a>
@@ -23,7 +23,7 @@
             </ul>
             <a href="{{ route('admin.post') }}" class="btn btn-outline-warning mx-3">Post Job</a>
             <div class="dropdown-center">
-                <button class="btn btn-secondary text-bg-warning dropdown-toggle" type="button"
+                <button class="btn btn-secondary text-bg-warning dropdown-toggle ms-3" type="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     {{ Auth::user()->name }}
                 </button>

@@ -12,7 +12,7 @@
         <div class="collapse navbar-collapse" id="navmenu">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a href="#instructors" class="nav-link">Dashboard</a>
+                    <a href="{{ route('user.dashboard') }}" class="nav-link">Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a href="#instructors" class="nav-link">Find Jobs</a>
@@ -22,7 +22,7 @@
                 </li>
             </ul>
             <div class="dropdown-center">
-                <button class="btn btn-secondary text-bg-warning dropdown-toggle" type="button"
+                <button class="btn btn-secondary text-bg-warning dropdown-toggle ms-3" type="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     {{ Auth::user()->name }}
                 </button>

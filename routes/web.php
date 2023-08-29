@@ -28,7 +28,8 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('admin')->name('admin.')->middleware(['admin'])->group(function () {
         Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('post', [AdminController::class, 'post'])->name('post');
-        Route::get('store', [AdminController::class, 'store'])->name('store');
+        Route::post('store', [AdminController::class, 'store'])->name('store');
+        Route::get('show', [AdminController::class, 'show'])->name('show');
     });
 
     Route::prefix('user')->name('user.')->group(function () {

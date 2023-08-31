@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,13 +17,11 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [PublicController::class, 'index'])->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('admin')->name('admin.')->middleware(['admin'])->group(function () {
@@ -30,10 +29,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('post', [AdminController::class, 'post'])->name('post');
         Route::post('store', [AdminController::class, 'store'])->name('store');
         Route::get('show', [AdminController::class, 'show'])->name('show');
+        Route::get('applicant', [AdminController::class, 'applicant'])->name('applicant');
     });
 
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+        Route::get('profile', [UserController::class, 'profile'])->name('profile');
+        Route::match(['get', 'post'],'profile/edit', [UserController::class, 'edit'])->name('edit');
+        Route::post('apply/{userId}', [UserController::class, 'apply'])->name('apply');
+        Route::get('applied', [UserController::class, 'applied'])->name('applied');
     });
 });
 

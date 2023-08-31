@@ -17,9 +17,13 @@
                     @csrf
 
                     <div class="mb-3">
+                        <h3 class="card-header p-4 bg-secondary text-white rounded text-center">User Details</h3>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title"
-                            value="{{ old('title') }}">
+                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
+                            name="title" value="{{ old('title') }}">
                         @error('title')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -29,7 +33,8 @@
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4">{{ old('description') }}</textarea>
+                        <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
+                            rows="4">{{ old('description') }}</textarea>
                         @error('description')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -39,8 +44,8 @@
 
                     <div class="mb-3">
                         <label for="location" class="form-label">Location</label>
-                        <input type="text" class="form-control @error('location') is-invalid @enderror" id="location" name="location"
-                            value="{{ old('location') }}">
+                        <input type="text" class="form-control @error('location') is-invalid @enderror" id="location"
+                            name="location" value="{{ old('location') }}">
                         @error('location')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -50,8 +55,8 @@
 
                     <div class="mb-3">
                         <label for="tags" class="form-label">Tags ( Seprated with comma )</label>
-                        <input type="text" class="form-control @error('tags') is-invalid @enderror" id="tags" name="tags"
-                            value="{{ old('tags') }}">
+                        <input type="text" class="form-control @error('tags') is-invalid @enderror" id="tags"
+                            name="tags" value="{{ old('tags') }}">
                         @error('tags')
                             <div class="invalid-feedback">
                                 {{ $message }}

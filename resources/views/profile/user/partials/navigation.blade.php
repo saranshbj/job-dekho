@@ -12,13 +12,13 @@
         <div class="collapse navbar-collapse" id="navmenu">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a href="{{ route('user.dashboard') }}" class="nav-link">Dashboard</a>
+                    <a href="{{ route('user.dashboard') }}" class="nav-link {{ Request::is('user/dashboard') ? 'active' : '' }}">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#instructors" class="nav-link">Find Jobs</a>
+                    <a href="{{ route('user.profile') }}" class="nav-link {{ Request::is('user/profile') ? 'active' : '' }}">Profile</a>
                 </li>
-                <li class="nav-item active">
-                    <a href="#learn" class="nav-link">Job Applied</a>
+                <li class="nav-item">
+                    <a href="{{ route('user.applied') }}" class="nav-link {{ Request::is('user/applied') ? 'active' : '' }}">Job Applied</a>
                 </li>
             </ul>
             <div class="dropdown-center">

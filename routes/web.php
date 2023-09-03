@@ -18,10 +18,8 @@ use App\Http\Controllers\PublicController;
 */
 
 Route::get('/', [PublicController::class, 'index'])->name('home');
+Route::get('view/{jobId}', [PublicController::class, 'viewJob'])->name('viewJob');
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('admin')->name('admin.')->middleware(['admin'])->group(function () {
@@ -30,6 +28,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('store', [AdminController::class, 'store'])->name('store');
         Route::get('show', [AdminController::class, 'show'])->name('show');
         Route::get('applicant', [AdminController::class, 'applicant'])->name('applicant');
+        Route::put('updateStatus/{applicationId}', [AdminController::class, 'updateStatus'])->name('update');
+        Route::get('viewProfile/{applicantId}', [AdminController::class, 'viewProfile'])->name('viewProfile');
     });
 
     Route::prefix('user')->name('user.')->group(function () {

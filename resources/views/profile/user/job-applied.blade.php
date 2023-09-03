@@ -15,8 +15,26 @@
                                 <div class="d-flex justify-content-between">
                                     <h5 class="card-title fw-bold text-primary">{{ $appliedJob->job->title }}</h5>
                                     <p class="card-text"><strong>Current Status:</strong>
-                                        <span class="badge bg-success" style="font-size: 15px">{{ ucfirst($appliedJob->status) }}</span>
+                                        @php
+                                            $statusClass = '';
+                                            switch ($appliedJob->status) {
+                                                case 'accepted':
+                                                    $statusClass = 'bg-success';
+                                                    break;
+                                                case 'applied':
+                                                    $statusClass = 'bg-warning';
+                                                    break;
+                                                case 'rejected':
+                                                    $statusClass = 'bg-danger';
+                                                    break;
+                                                default:
+                                                    $statusClass = 'bg-secondary';
+                                                    break;
+                                            }
+                                        @endphp
+                                        <span class="badge {{ $statusClass }}" style="font-size: 15px">{{ ucfirst($appliedJob->status) }}</span>
                                     </p>
+
                                 </div>
                                 <p class="card-text text-muted">{{ $appliedJob->job->description }}</p>
                                 <p class="card-text"><strong>Location:</strong> {{ $appliedJob->job->location }}</p>

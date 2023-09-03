@@ -5,7 +5,19 @@
 
     <div class="container">
         <div class="row mt-4">
-            <div class="col-md-12">
+            <div id="applicants-section" class="col-md-12">
+                {{-- alerts will be shown here  --}}
+                <div id="messageContainer">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @elseif (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                </div>
                 @if ($applicants->isEmpty())
                     <p>No applicants found.</p>
                 @else
@@ -15,9 +27,11 @@
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <div class="d-flex align-items-center ">
                                         <h5 class="card-title fw-bold text-primary">{{ $applicant->user->name }}</h5>
-                                        <a href="" class="btn btn-sm btn-outline-primary ms-2">View Profile</a>
+                                        <button data-applicant-id="{{ $applicant->user->id }}"
+                                            class="viewProfile btn btn-sm btn-outline-primary ms-2">View Profile</button>
                                     </div>
-                                    <form action="" method="POST" class="d-flex align-items-center">
+                                    <form action="{{ route('admin.update', ['applicationId' => $applicant->id]) }}"
+                                        method="POST" class="d-flex align-items-center">
                                         @csrf
                                         @method('PUT')
                                         <select name="status" id="status" class="form-select me-2">
@@ -49,4 +63,19 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const viewProfileButtons = document.querySelectorAll('.viewProfile');
+
+            viewProfileButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const applicantId = this.getAttribute('data-applicant-id');
+                    const url = `{{ route('admin.viewProfile', '') }}/${applicantId}`;
+
+                    window.location.href = url;
+                });
+            });
+        });
+    </script>
 @endsection

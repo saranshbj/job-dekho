@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    // method for providing job applied, job accepted and job rejected count to user dashboard
+    // ---- method for providing job applied, job accepted and job rejected count to user dashboard
     public function dashboard()
     {
         $user = auth()->user();
@@ -33,7 +33,7 @@ class UserController extends Controller
         return view('profile.user.dashboard', compact('jobApplicationsCount', 'jobAcceptedCount', 'jobRejectedCount'));
     }
 
-    // method for showing user details in profile view
+    // ---- method for showing user details in profile view
     public function profile()
     {
         $user = Auth::user();
@@ -41,7 +41,7 @@ class UserController extends Controller
         return view('profile.user.profile', compact('user', 'userDetails'));
     }
 
-    // method for controlling both get and post request and its used to update user profile details
+    // ---- method for controlling both get and post request and its used to update user profile details
     public function edit(Request $request)
     {
         // if received get request
@@ -76,27 +76,34 @@ class UserController extends Controller
             $userDetails->address = $validatedData['address'];
             $userDetails->user_id = $userId;
 
-            if ($request->hasFile('resume')) {
 
-                // delete previous resume if available
+            if ($request->hasFile('resume')) {
+                // Delete previous resume if available
                 if ($userDetails->resume) {
-                    Storage::disk('public')->delete('resumes/' . $userDetails->resume);
+                    // Delete the previous resume from the public folder
+                    $previousResumePath = public_path('resumes/' . $userDetails->resume);
+                    if (file_exists($previousResumePath)) {
+                        unlink($previousResumePath);
+                    }
                 }
 
                 $resumeFile = $request->file('resume');
                 $resumeExtension = $resumeFile->getClientOriginalExtension();
                 $uniqueFilename = 'resume_' . time() . '.' . $resumeExtension;
 
-                $resumeFile->storeAs('resumes', $uniqueFilename, 'public');
+                // Save the resume file to the public folder
+                $resumeFile->move(public_path('resumes'), $uniqueFilename);
+
                 $userDetails->resume = $uniqueFilename;
             }
+
 
             $userDetails->save();
             return redirect()->route('user.profile')->with('success', 'User details updated successfully.');
         }
     }
 
-    // method to add record in job_application table when an user applies a job
+    // ---- method to add record in job_application table when an user applies a job
     public function apply(Request $request, $jobId)
     {
         if (!Auth::check()) {
@@ -122,7 +129,7 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'You have applied for this job.');
     }
 
-    // method for showing all the applied jobs to the user in job-applied view
+    // ---- method for showing all the applied jobs to the user in job-applied view
     public function applied()
     {
         $user = User::findOrFail(auth()->id());

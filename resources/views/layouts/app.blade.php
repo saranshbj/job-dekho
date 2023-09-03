@@ -29,6 +29,17 @@
         @yield('content')
     </div>
 
+    {{-- common alert javascript logic --}}
+    <script>
+        function clearMessages() {
+            var messageContainer = document.getElementById('messageContainer');
+            messageContainer.innerHTML = '';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(clearMessages, 5000);
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
     </script>

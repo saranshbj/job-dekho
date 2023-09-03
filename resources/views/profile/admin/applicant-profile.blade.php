@@ -1,27 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('profile.user.partials.navigation')
+    @include('profile.admin.partials.navigation')
 
     <div class="container-fluid py-5 bg-light">
-        {{-- alerts will be shown here  --}}
-        <div id="messageContainer">
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @elseif (session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
-            @endif
-        </div>
         <div class="row justify-content-center align-items-center">
             <div class="col-lg-6">
-                <div class="card ">
-                    <h3 class="card-header p-4 bg-secondary text-white">User Profile</h3>
-                    <div class="card-body p-4 ">
-                        <h4 class="card-title">{{ $user->name }}</h4>
+                <div class="card">
+                    <h3 class="card-header p-4 bg-secondary text-white">{{ $user->name }}</h3>
+                    <div class="card-body p-4">
                         <p class="card-text email h5"><span class="badge text-bg-warning">{{ $user->email }}</span></p>
 
                         <hr>
@@ -50,10 +37,7 @@
                             @endif
                         </div>
 
-
                         <hr>
-
-                        <a href="{{ route('user.edit') }}" class="btn btn-primary">Edit Details</a>
                     </div>
                 </div>
             </div>

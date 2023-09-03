@@ -4,13 +4,17 @@
     @include('navigation')
 
     <div class="container">
-        @if (session('success'))
-            <div class="alert alert-success" role="alert">{{ session('success') }}</div>
-        @endif
-
-        @if (session('warning'))
-            <div class="alert alert-danger" role="alert">{{ session('error') }}</div>
-        @endif
+        <div id="messageContainer">
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @elseif (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+        </div>
         <div class="row">
             <div class="my-4 d-flex flex-column align-items-center justify-content-center" style="height: 300px;">
                 <h1 class="fw-bold mb-4">Find Your Dream <mark>Job</mark></h1>
@@ -22,18 +26,22 @@
                         <!-- First Dropdown -->
                         <select name="category" class="form-select" aria-label="Category">
                             <option value="all">Categories</option>
-                            <option value="category1">Category 1</option>
-                            <option value="category2">Category 2</option>
-                            <!-- Add more options as needed -->
+                            <option value="engineering">Engineering</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="sales">Sales</option>
+                            <option value="healthcare">Healthcare</option>
                         </select>
 
+
                         <!-- Second Dropdown -->
-                        <select name="location" class="form-select" aria-label="Location">
+                        <select name="date_posted" class="form-select" aria-label="Date Posted">
                             <option value="all">Date Posted</option>
-                            <option value="location1">Location 1</option>
-                            <option value="location2">Location 2</option>
-                            <!-- Add more options as needed -->
+                            <option value="today">Today</option>
+                            <option value="yesterday">Yesterday</option>
+                            <option value="week">This Week</option>
                         </select>
+                        <!-- Hidden input field for form identification -->
+                        <input type="hidden" name="form_id" value="filter">
                         <button class="btn btn-primary" type="submit">
                             Find
                         </button>
@@ -59,14 +67,14 @@
                                     <div class="d-flex">
                                         @if (auth()->check())
                                             @if (auth()->user()->role === 'admin')
-                                                <a href="#" class="btn btn-outline-primary me-2">View</a>
+                                            <button data-jobId="{{ $job->id }}" class="viewJob btn btn-outline-primary me-2">View</button>
                                             @else
                                                 {{-- checking if user already applied in the job or not --}}
                                                 @php
                                                     $hasApplied = $job->jobApplications->contains('user_id', Auth::user()->id);
                                                 @endphp
 
-                                                <button href="#" class="btn btn-outline-primary me-2">View</button>
+                                                <button data-jobId="{{ $job->id }}" class="viewJob btn btn-outline-primary me-2">View</button>
 
                                                 @if ($hasApplied)
                                                     <span class="btn btn-outline-success me-2">Applied</span>
@@ -100,4 +108,19 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const viewJobButtons = document.querySelectorAll('.viewJob');
+
+            viewJobButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const jobId = this.getAttribute('data-jobId');
+                    const url = `{{ route('viewJob', '') }}/${jobId}`;
+
+                    window.location.href = url;
+                });
+            });
+        });
+    </script>
 @endsection

@@ -16,7 +16,8 @@
                 @if (session('error'))
                     <div class="alert alert-danger" role="alert">{{ session('error') }}</div>
                 @endif
-                <form action="{{ route('user.edit') }}" method="POST" style="max-width: 500px; margin: 0 auto;" enctype="multipart/form-data">
+                <form action="{{ route('user.edit') }}" method="POST" style="max-width: 500px; margin: 0 auto;"
+                    enctype="multipart/form-data">
                     @csrf
 
                     <div class="mb-4">
@@ -37,7 +38,8 @@
                     <div class="mb-3">
                         <label for="phone_number" class="form-label">Phone Number</label>
                         <input type="text" class="form-control @error('phone_number') is-invalid @enderror"
-                            id="phone_number" name="phone_number" value="{{ old('phone_number', $userDetails->phone_number) }}">
+                            id="phone_number" name="phone_number"
+                            value="{{ old('phone_number', $userDetails->phone_number) }}">
                         @error('phone_number')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -65,10 +67,17 @@
                                 {{ $message }}
                             </div>
                         @enderror
+
                         @if ($userDetails->resume)
-                            <p class="mt-2"><strong>Current Resume:</strong> <a href="{{ asset('storage/resumes/' . $userDetails->resume) }}" target="_blank">{{ $userDetails->resume }}</a></p>
+                            <div class="mt-2">
+                                <strong>Current Resume:</strong>
+                                <a href="{{ asset('resumes/' . $userDetails->resume) }}" target="_blank">
+                                    {{ $userDetails->resume }}
+                                </a>
+                            </div>
                         @endif
                     </div>
+
 
                     <button type="submit" class="btn btn-primary">Save Details</button>
                 </form>
